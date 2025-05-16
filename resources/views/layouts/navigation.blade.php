@@ -6,20 +6,35 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <!-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="60" height="60">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:rgb(0, 153, 255);stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:rgb(0, 119, 255);stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:rgb(0, 85, 255);stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <polygon points="10,2 2,18 18,18" fill="url(#grad1)" />
+                            <text x="6" y="15" font-family="Arial, sans-serif" font-size="10" fill="white" font-weight="bold">F</text>
+                        </svg>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        <!-- {{ __('Página Principal') }} --><i class="fa-solid fa-house"></i>
                     </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Buscar por link...">
+                    <button class="d-flex px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] ms-0"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -43,7 +58,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -89,7 +104,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
