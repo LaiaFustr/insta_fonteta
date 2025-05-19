@@ -104,7 +104,7 @@
 
     </header>
     @if(request()->routeIs('home') ||request()->routeIs('welcome') || request()->routeIs('etiqueta.show'))
-    @include('layouts.home');
+    @include('layouts.home')
     @elseif(request()->routeIs('nube'))
     @include('layouts.nube')
     @endif
