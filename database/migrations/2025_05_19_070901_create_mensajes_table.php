@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mensajes', function (Blueprint $table) {
-            $table->integer('id');
-            $table->integer('userid');
+            $table->id();
+            $table->bigInteger('user_id')->unsigned();
             $table->text('content');
             $table->timestamps();
 
-            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

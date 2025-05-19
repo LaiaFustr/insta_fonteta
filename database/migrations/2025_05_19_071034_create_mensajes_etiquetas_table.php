@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mensajes_etiquetas', function (Blueprint $table) {
-            $table->id();
+            
+            $table->bigInteger('mensaje_id')->unsigned();
+            $table->bigInteger('etiqueta_id')->unsigned();
             $table->timestamps();
+
+            $table->primary(['mensaje_id', 'etiqueta_id']);
+            $table->foreign('mensaje_id')->references('id')->on('mensajes')->onDelete('cascade');
+            $table->foreign('etiqueta_id')->references('id')->on('etiquetas')->onDelete('cascade');
         });
     }
 

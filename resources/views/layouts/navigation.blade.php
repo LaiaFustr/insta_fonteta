@@ -5,9 +5,9 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('home') }}">
                         <!-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> -->
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="60" height="60">
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="60" height="60">
                             <defs>
                                 <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" style="stop-color:rgb(0, 153, 255);stop-opacity:1" />
@@ -17,13 +17,13 @@
                             </defs>
                             <polygon points="10,2 2,18 18,18" fill="url(#grad1)" />
                             <text x="6" y="15" font-family="Arial, sans-serif" font-size="10" fill="white" font-weight="bold">F</text>
-                        </svg>
+                        </svg> -->
                     </a>
                 </div>
-
+                
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         <!-- {{ __('Página Principal') }} --><i class="fa-solid fa-house"></i>
                     </x-nav-link>
                 </div>
@@ -82,8 +82,8 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Home') }}
             </x-responsive-nav-link>
         </div>
 

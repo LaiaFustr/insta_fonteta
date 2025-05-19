@@ -12,9 +12,7 @@ class ComentarioController extends Controller
      */
     public function index()
     {
-        $comentariosmensajes = Comentario::all()->mensajes->get();
-
-        return view('welcome', compact('comentariosmensajes'));
+        
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\Mensaje;
 use Illuminate\Http\Request;
@@ -12,7 +12,12 @@ class MensajeController extends Controller
      */
     public function index()
     {
-        //
+        /* $userMensaje = Mensaje::with('user')->get(); */
+        $mensajes =  Mensaje::with('comentarios', 'comentarios.user', 'user')->get();
+        /* $comentarios = $mensajes::with('comentarios')->get(); */
+       /*  dd($mensajes); */
+        /* Log::info($mensajes); */
+        return view('welcome', compact('mensajes'));
     }
 
     /**
