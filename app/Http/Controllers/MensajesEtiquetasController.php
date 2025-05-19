@@ -33,9 +33,10 @@ class MensajesEtiquetasController extends Controller
 
     
 
-    public function create()
+    public function create(Request $request)
     {
-        //
+        
+        dd($request);
     }
 
     /**

@@ -13,13 +13,14 @@ use Illuminate\Support\Facades\Route;
 }); */
 Route::get('/', [MensajeController::class, 'index'])->name('welcome');
 
-
 Route::get('/home',/* */ [MensajeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
 
 
 Route::get('/nube', [EtiquetaController::class, 'index'])->middleware(['auth', 'verified'])->name('nube');
 
-Route::get('/mensajes/#{nombre}', [MensajesEtiquetasController::class, 'index'])->name('etiqueta.show');
+/* Route::get('/mensajes/#{nombre}', [MensajesEtiquetasController::class, 'index'])->name('etiqueta.show'); */
+
+Route::post('/msgcreate', [MensajesEtiquetasController::class, 'create'])->middleware(['auth', 'verified'])->name('mensaje.create');
 
 
 

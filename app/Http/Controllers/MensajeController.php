@@ -25,7 +25,7 @@ class MensajeController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

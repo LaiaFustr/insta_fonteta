@@ -1,12 +1,14 @@
  @auth
  <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
      <div class="row">
-        <form method="post" action="{{ route('create.message') }}"> <!-- //falta crear la ruta -->
-            @csrf
-         <div class="input-group" style="display:flex; justify-content:center;">
-             <input class="form-control" type="text" placeholder="Añade un mensaje..." style="width:50vw!important;">
-             <button type="submit" class="d-flex px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] ms-0" style="width:auto!important;">Añadir</button>
-         </div>
+         <form method="post" action="{{ route('mensaje.create') }}"> <!-- //falta crear la ruta -->
+             @csrf
+             <input type="hidden" name="user_id" value="{{ Auth::user()->id}}">
+             <div class="input-group" style="display:flex; justify-content:center;">
+                 <input class="form-control" type="text" name="mensaje" placeholder="Añade un mensaje..." style="width:50vw!important;">
+                 <button type="submit" class="d-flex px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] ms-0" style="width:auto!important;">Añadir</button>
+             </div>
+
          </form>
      </div>
  </div>
@@ -36,6 +38,24 @@
                  <div>No hay comentarios</div>
 
                  @endif
+
+                 @auth
+                 <!-- <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0"> -->
+                     <div class="col  ms-5">
+                         <form method="post" action=""> <!-- //falta crear la ruta -->
+                             @csrf
+                             <input type="hidden" name="user_id" value="{{ Auth::user()->id}}">
+                             <div class="input-group" style="display:flex; justify-content:center;">
+                                 <input class="form-control" type="text" name="comentario" placeholder="Añade un comentario..." style="width:50vw!important;">
+                                 <button type="submit" class="d-flex px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] ms-0" style="width:auto!important;">Añadir Comentario</button>
+                             </div>
+
+                         </form>
+                     </div>
+                 <!-- </div> -->
+                 @endauth
+
+
              </div>
              @endforeach
          </div>
