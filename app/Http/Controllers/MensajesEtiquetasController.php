@@ -78,7 +78,15 @@ class MensajesEtiquetasController extends Controller
      */
     public function store(Request $request) {}
 
-    public function update(Request $request) {}
+    /* public function edit($id)
+    {
+        $ide = $id;
+        return redirect()->route('editmsg', compact('ide'));
+    }
+    public function update(Request $request) {
+
+        return '';
+    } */
 
     /**
      * Remove the specified resource from storage.
@@ -87,7 +95,8 @@ class MensajesEtiquetasController extends Controller
     {
         $mensaje = Mensaje::findOrFail($id);
         $mensaje->etiquetas()->detach();
+        $mensaje->comentarios()->delete();
         $mensaje->delete();
-        return redirect()->back()->with('commentDel', true);
+        return redirect()->back()->with('msgDel', true);
     }
 }

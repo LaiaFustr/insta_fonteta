@@ -163,4 +163,15 @@
         timer: 700
     });
 </script>
+@elseif(session('msgDel'))
+<script>
+    str = "Mensaje eliminado con éxito!";
+
+    Swal.fire({
+        icon: "success",
+        title: str,
+        showConfirmButton: false,
+        timer: 700
+    });
+</script>
 @endif

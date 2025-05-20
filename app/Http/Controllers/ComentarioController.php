@@ -71,6 +71,6 @@ class ComentarioController extends Controller
     {
         $comentario = Comentario::findOrFail($id);
         $comentario->delete();
-        return redirect()->back()->with('commentBorr', true);
+        return redirect()->route('home')->with('commentDel', true);
     }
 }

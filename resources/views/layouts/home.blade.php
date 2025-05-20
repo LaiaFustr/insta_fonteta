@@ -27,14 +27,23 @@
                  <div class="alert alert-secondary">
                      <span class="text-primary small me-auto">{{ $mensaje->user->name }}</span>
                      <div class="row">
+                        <!-- @if(request()->routeIs('editmsg') && $mensaje->id == $id)
+                        <form method="post" action="">
+                            <textarea name="" id="">{!! $mensaje->content !!}</textarea>
+                            <button type="submit">Aceptar cambios</button>
+                        </form>
+                        @else -->
                          <p class="col pb-0"> {!! $mensaje->content !!} </p>
+                         <!-- @endif -->
                          @auth
                          @if(Auth::user()->role == 'admin')<!-- tendrá acceso a las rutas de editado y borrado de admin  -->
                          <div class="col-auto ms-auto gap-3">
-                             <form method="post" action="">
+                             <form method="post" action="{{route('admin.msg.edit', $mensaje->id)}}">
+                                @csrf
                                  <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fa-solid fa-pencil"></i></button>
                              </form>
-                             <form action="">
+                             <form method="post" action="{{route('admin.msg.destroy', $mensaje->id)}}">
+                                @csrf
                                  <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
                              </form>
                          </div>
@@ -43,7 +52,8 @@
                              <!-- <form method="post" action="">
                                  <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fa-solid fa-pencil"></i></button>
                              </form> -->
-                             <form action="">
+                             <form method="post" action="{{route('msg.destroy', $mensaje->id)}}">
+                                @csrf
                                  <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
                              </form>
                          </div>
@@ -61,17 +71,27 @@
                      <div class="row">
                          <div class="col"> {{$comentario->content}}</div>
                          @auth
-                         @if(Auth::user()->role == 'admin' || $mensaje->user->name == Auth::user()->name)
+                         @if(Auth::user()->role == 'admin' )
                          <div class="col-auto ms-auto">
-                            <!--  <form action="">
-                                 <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-pencil"></i></button>
-                             </form> -->
                              <form action="">
+                                @csrf
+                                 <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-pencil"></i></button>
+                             </form>
+                             <form method="post" action="{{route('admin.comment.destroy', $comentario->id)}}">
+                                @csrf
                                  <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-trash"></i></button>
                              </form>
                          </div>
-
-
+                         @elseif($comentario->user->name == Auth::user()->name)
+                         <div class="col-auto ms-auto">
+                             <!--  <form action="">
+                                 <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-pencil"></i></button>
+                             </form> -->
+                             <form method="post" action="{{route('comment.destroy', $comentario->id)}}">
+                                @csrf
+                                 <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-trash"></i></button>
+                             </form>
+                         </div>
                          @endif
                          @endauth
 
