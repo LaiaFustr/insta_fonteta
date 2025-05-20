@@ -10,17 +10,26 @@ class ComentarioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+       /*  dd($request); */
+        $data = request()->validate([
+            'user_id' => 'required|exists:users,id',
+            'mensaje_id' => 'required|exists:mensajes,id',
+            'content' => '',
+        ]);
+        /* dd($data); */
+        Comentario::create([
+            'user_id' => $data['user_id'],
+            'mensaje_id' => $data['mensaje_id'],
+            'content' => $data['content']
+        ]);
+         return back()->with('commentCreated', true);
     }
 
     /**

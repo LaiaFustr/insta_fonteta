@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MensajesEtiquetas;
 use App\Models\Mensaje;
 use App\Models\Etiqueta;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MensajesEtiquetasController extends Controller
@@ -14,10 +15,8 @@ class MensajesEtiquetasController extends Controller
      */
     public function index($id)
     {
-        $etiqueta = Etiqueta::find($id);
-        $mensajes = $etiqueta->mensajes;
-
-        return view('welcome', compact($mensajes));
+        $mensajes = Etiqueta::find($id)->mensajes()->get();
+        return view('welcome', compact('mensajes'));
         /* $mensajes = Mensaje::all();
         $mensajes_etiquetas = [];
         foreach ($mensajes as $mensaje) {
@@ -30,13 +29,38 @@ class MensajesEtiquetasController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-
-    
-
     public function create(Request $request)
     {
-        
-        dd($request);
+
+
+        $data = request()->validate([
+            'user_id' => 'required|exists:users,id',
+            'content' => '',
+        ]);
+        /* dd($data); */
+        Mensaje::create([
+            'user_id' => $data['user_id'],
+            'content' => $data['content']
+        ]);
+         $lastmsg = Mensaje::latest()->first();
+        $strEtiquetas =  $data['content'];
+        if (str_contains($strEtiquetas, '#')) {
+            /* $etiquetas = [];
+            $substr = $strEtiquetas;
+
+            $pos = strpos($substr, '#');
+            $substr = substr($substr, $pos);
+            dd($substr); */
+            preg_match_all('/#(\w+)/', $strEtiquetas, $etiquetas);
+            foreach ($etiquetas[0] as $etiqueta) {
+                $lasteti = Etiqueta::firstOrCreate([
+                    'nombre' => $etiqueta,
+                ]);
+                $lastmsg->etiquetas()->attach($lasteti->id);
+            }
+
+        }
+        return back()->with('msgCreated', true);
     }
 
     /**

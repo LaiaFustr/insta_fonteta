@@ -27,5 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->call([MensajeSeeder::class]);
         $this->call([ComentarioSeeder::class]);
         $this->call([EtiquetaSeeder::class]);
+        $this->call([MensajesEtiquetasSeeder::class]);
     }
 }

@@ -11,7 +11,8 @@ class Mensaje extends Model
     /** @use HasFactory<\Database\Factories\MensajeFactory> */
     use HasFactory;
     protected $table = 'mensajes';
-    protected $fillable = ['content'];
+    protected $primaryKey = 'id';
+    protected $fillable = ['user_id','content'];
     public $timestamps = true;
 
 
@@ -24,6 +25,6 @@ class Mensaje extends Model
     }
 
     public function etiquetas(){
-        return $this->belongsToMany(Etiqueta::class,'mensajes_etiquetas', 'mensaje_id','etiqueta_id');
+        return $this->belongsToMany(Etiqueta::class,'mensajes_etiquetas', 'mensaje_id','etiqueta_id')->withTimestamps();
     }
 }

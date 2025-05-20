@@ -12,11 +12,7 @@ class MensajeController extends Controller
      */
     public function index()
     {
-        /* $userMensaje = Mensaje::with('user')->get(); */
-        $mensajes =  Mensaje::with('comentarios', 'comentarios.user', 'user')->get();
-        /* $comentarios = $mensajes::with('comentarios')->get(); */
-       /*  dd($mensajes); */
-        /* Log::info($mensajes); */
+        $mensajes =  Mensaje::with('comentarios', 'comentarios.user', 'user')->orderBy('id', 'desc')->get();
         return view('welcome', compact('mensajes'));
     }
 

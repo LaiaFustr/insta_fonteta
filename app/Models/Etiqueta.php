@@ -16,6 +16,6 @@ class Etiqueta extends Model
 
 
     public function mensajes() {
-        return $this->belongsToMany(Mensaje::class,'mensajes_etiquetas', 'etiqueta_id', 'mensaje_id');
+        return $this->belongsToMany(Mensaje::class,'mensajes_etiquetas', 'etiqueta_id', 'mensaje_id')->withTimestamps();
     }
 }
