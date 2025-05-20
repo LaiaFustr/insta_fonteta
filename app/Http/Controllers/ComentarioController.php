@@ -61,14 +61,16 @@ class ComentarioController extends Controller
      */
     public function update(Request $request, Comentario $comentario)
     {
-        //
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comentario $comentario)
+    public function destroy($id)
     {
-        //
+        $comentario = Comentario::findOrFail($id);
+        $comentario->delete();
+        return redirect()->back()->with('commentBorr', true);
     }
 }

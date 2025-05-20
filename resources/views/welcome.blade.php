@@ -151,4 +151,16 @@
         timer: 700
     });
 </script>
+
+@elseif(session('commentDel'))
+<script>
+    str = "Comentario eliminado con éxito!";
+
+    Swal.fire({
+        icon: "success",
+        title: str,
+        showConfirmButton: false,
+        timer: 700
+    });
+</script>
 @endif

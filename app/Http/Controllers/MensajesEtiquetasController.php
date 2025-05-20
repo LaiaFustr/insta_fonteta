@@ -17,17 +17,17 @@ class MensajesEtiquetasController extends Controller
     {
         /* $mensajes = Etiqueta::find($id)->mensajes()->get(); */
 
-        
-        $mensajes = /*  Mensaje:: */Etiqueta::find($id)->mensajes()->with('comentarios', 'comentarios.user', 'user', 'etiquetas')->orderBy('id', 'desc')->get();
+
+        $mensajes = /*  Mensaje:: */ Etiqueta::find($id)->mensajes()->with('comentarios', 'comentarios.user', 'user', 'etiquetas')->orderBy('id', 'desc')->get();
 
         foreach ($mensajes as $mensaje) {
             $str = $mensaje->content;
             foreach ($mensaje->etiquetas as $etiqueta) {
-                $hashtag = '<a class="text-muted p-0 m-0 mb-1" href="'.route('etiqueta.show',$etiqueta->id).'">'.$etiqueta->nombre.'</a>';
-                $mensaje->content = str_replace($etiqueta->nombre,$hashtag, $mensaje->content);
+                $hashtag = '<a class="text-muted p-0 m-0 mb-1" href="' . route('etiqueta.show', $etiqueta->id) . '">' . $etiqueta->nombre . '</a>';
+                $mensaje->content = str_replace($etiqueta->nombre, $hashtag, $mensaje->content);
             }
         }
-        
+
         return view('welcome', compact('mensajes'));
         /* $mensajes = Mensaje::all();
         $mensajes_etiquetas = [];
@@ -53,7 +53,7 @@ class MensajesEtiquetasController extends Controller
             'user_id' => $data['user_id'],
             'content' => $data['content']
         ]);
-         $lastmsg = Mensaje::latest()->first();
+        $lastmsg = Mensaje::latest()->first();
         $strEtiquetas =  $data['content'];
         if (str_contains($strEtiquetas, '#')) {
             /* $etiquetas = [];
@@ -69,7 +69,6 @@ class MensajesEtiquetasController extends Controller
                 ]);
                 $lastmsg->etiquetas()->attach($lasteti->id);
             }
-
         }
         return back()->with('msgCreated', true);
     }
@@ -77,21 +76,18 @@ class MensajesEtiquetasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-       
-    }
+    public function store(Request $request) {}
 
-    public function update(Request $request)
-    {
-        
-    }
+    public function update(Request $request) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Mensaje $mensaje)
+    public function destroy($id)
     {
-       
+        $mensaje = Mensaje::findOrFail($id);
+        $mensaje->etiquetas()->detach();
+        $mensaje->delete();
+        return redirect()->back()->with('commentDel', true);
     }
 }
