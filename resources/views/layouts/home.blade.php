@@ -22,17 +22,62 @@
          <div class="col-12">
              @foreach($mensajes as $mensaje)
              <div class="p-4">
-                 <div class="alert alert-primary">
-                     <span class="text-primary small bolder me-auto">{{ $mensaje->user->name }}</span>
-                     {{ $mensaje->content }}
+
+
+                 <div class="alert alert-secondary">
+                     <span class="text-primary small me-auto">{{ $mensaje->user->name }}</span>
+                     <div class="row">
+                         <p class="col pb-0"> {!! $mensaje->content !!} </p>
+                         @auth
+                         @if(Auth::user()->role == 'admin')<!-- tendrá acceso a las rutas de editado y borrado de admin  -->
+                         <div class="col-auto ms-auto gap-3">
+                             <form method="post" action="">
+                                 <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fa-solid fa-pencil"></i></button>
+                             </form>
+                             <form action="">
+                                 <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                             </form>
+                         </div>
+                         @elseif( $mensaje->user->name == Auth::user()->name)<!-- tendrá acceso a las rutas de editado y borrado de user  -->
+                         <div class="col-auto ms-auto  gap-3">
+                             <!-- <form method="post" action="">
+                                 <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fa-solid fa-pencil"></i></button>
+                             </form> -->
+                             <form action="">
+                                 <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                             </form>
+                         </div>
+                         @endif
+                         @endauth
+                     </div>
                  </div>
+
                  @if($mensaje->comentarios)
 
                  @foreach($mensaje->comentarios as $comentario)
-                 <div class="alert alert-light ms-5">
+
+                 <div class=" my-2 ms-5 p-2 px-5 border-bottom">
                      <span class="text-warning small bolder me-auto">{{ $comentario->user->name }}</span>
-                     {{$comentario->content}}
+                     <div class="row">
+                         <div class="col"> {{$comentario->content}}</div>
+                         @auth
+                         @if(Auth::user()->role == 'admin' || $mensaje->user->name == Auth::user()->name)
+                         <div class="col-auto ms-auto">
+                            <!--  <form action="">
+                                 <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-pencil"></i></button>
+                             </form> -->
+                             <form action="">
+                                 <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-trash"></i></button>
+                             </form>
+                         </div>
+
+
+                         @endif
+                         @endauth
+
+                     </div>
                  </div>
+
                  @endforeach
                  @else
                  <div>No hay comentarios</div>
@@ -40,18 +85,18 @@
                  @endif
                  @auth
                  <!-- <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0"> -->
-                     <div class="col  ms-5">
-                         <form method="post" action="{{route('comment.create')}}"> <!-- //falta crear la ruta -->
-                             @csrf
-                             <input type="hidden" name="user_id" value="{{ Auth::user()->id}}">
-                             <input type="hidden" name="mensaje_id" value="{{ $mensaje->id}}">
-                             <div class="input-group" style="display:flex; justify-content:center;">
-                                 <input class="form-control" type="text" name="content" placeholder="Añade un comentario..." style="width:50vw!important;">
-                                 <button type="submit" class="d-flex px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] ms-0" style="width:auto!important;">Añadir Comentario</button>
-                             </div>
+                 <div class="col  ms-5">
+                     <form method="post" action="{{route('comment.create')}}"> <!-- //falta crear la ruta -->
+                         @csrf
+                         <input type="hidden" name="user_id" value="{{ Auth::user()->id}}">
+                         <input type="hidden" name="mensaje_id" value="{{ $mensaje->id}}">
+                         <div class="input-group" style="display:flex; justify-content:center;">
+                             <input class="form-control" type="text" name="content" placeholder="Añade un comentario..." style="width:50vw!important;">
+                             <button type="submit" class="d-flex px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] ms-0" style="width:auto!important;">Añadir Comentario</button>
+                         </div>
 
-                         </form>
-                     </div>
+                     </form>
+                 </div>
                  <!-- </div> -->
                  @endauth
              </div>

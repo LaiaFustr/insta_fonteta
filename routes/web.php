@@ -12,24 +12,26 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 }); */
 Route::get('/', [MensajeController::class, 'index'])->name('welcome');
-
-Route::get('/home',/* */ [MensajeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
-
-Route::get('/nube', [EtiquetaController::class, 'index'])->middleware(['auth', 'verified'])->name('nube');
-
+Route::get('/home',/* */ [MensajeController::class, 'index'])/* ->middleware(['auth', 'verified']) */->name('home');
+Route::get('/nube', [EtiquetaController::class, 'index'])/* ->middleware(['auth', 'verified']) */->name('nube');
 Route::get('/etiqueta/{nombre}', [MensajesEtiquetasController::class, 'index'])->name('etiqueta.show');
 
 Route::post('/msgcreate', [MensajesEtiquetasController::class, 'create'])->middleware(['auth', 'verified'])->name('mensaje.create');
-
 Route::post('/commentcreate', [ComentarioController::class, 'create'])->middleware(['auth', 'verified'])->name('comment.create');
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    //ruta editar-eliminar mensajes y comentarios con middleware auth
 });
+
+//ruta editar-eliminar con middleware admin
+Route::middleware(['auth','admin'])->group(function(){
+
+});
+
+
 
 require __DIR__.'/auth.php';
 

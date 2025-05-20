@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Log;
 
 use App\Models\Mensaje;
@@ -12,17 +14,22 @@ class MensajeController extends Controller
      */
     public function index()
     {
-        $mensajes =  Mensaje::with('comentarios', 'comentarios.user', 'user')->orderBy('id', 'desc')->get();
+        $mensajes =  Mensaje::with('comentarios', 'comentarios.user', 'user', 'etiquetas')->orderBy('id', 'desc')->get();
+
+        foreach ($mensajes as $mensaje) {
+            $str = $mensaje->content;
+            foreach ($mensaje->etiquetas as $etiqueta) {
+                $hashtag = '<a class="text-muted p-0 m-0 mb-1" href="'.route('etiqueta.show',$etiqueta->id).'">'.$etiqueta->nombre.'</a>';
+                $mensaje->content = str_replace($etiqueta->nombre,$hashtag, $mensaje->content);
+            }
+        }
         return view('welcome', compact('mensajes'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.

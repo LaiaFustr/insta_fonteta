@@ -15,7 +15,19 @@ class MensajesEtiquetasController extends Controller
      */
     public function index($id)
     {
-        $mensajes = Etiqueta::find($id)->mensajes()->get();
+        /* $mensajes = Etiqueta::find($id)->mensajes()->get(); */
+
+        
+        $mensajes = /*  Mensaje:: */Etiqueta::find($id)->mensajes()->with('comentarios', 'comentarios.user', 'user', 'etiquetas')->orderBy('id', 'desc')->get();
+
+        foreach ($mensajes as $mensaje) {
+            $str = $mensaje->content;
+            foreach ($mensaje->etiquetas as $etiqueta) {
+                $hashtag = '<a class="text-muted p-0 m-0 mb-1" href="'.route('etiqueta.show',$etiqueta->id).'">'.$etiqueta->nombre.'</a>';
+                $mensaje->content = str_replace($etiqueta->nombre,$hashtag, $mensaje->content);
+            }
+        }
+        
         return view('welcome', compact('mensajes'));
         /* $mensajes = Mensaje::all();
         $mensajes_etiquetas = [];
@@ -31,7 +43,6 @@ class MensajesEtiquetasController extends Controller
      */
     public function create(Request $request)
     {
-
 
         $data = request()->validate([
             'user_id' => 'required|exists:users,id',
@@ -68,10 +79,19 @@ class MensajesEtiquetasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+    }
+
+    public function update(Request $request)
+    {
+        
     }
 
     /**
-     * Display the specified resource.
+     * Remove the specified resource from storage.
      */
+    public function destroy(Mensaje $mensaje)
+    {
+       
+    }
 }
