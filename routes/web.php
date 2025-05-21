@@ -42,15 +42,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/storemsg', [MensajesEtiquetasController::class, 'store'])->name('admin.msg.store');
     Route::post('/admin/deletemsg/{msg}', [MensajesEtiquetasController::class, 'destroy'])->name('admin.msg.destroy');
 
-
-
-
-
-     Route::post('/admin/editcomment/{comment}', [ComentarioController::class, 'edit'])->name('admin.comment.edit');
-
+    Route::post('/admin/editcomment/{comment}', [ComentarioController::class, 'edit'])->name('admin.comment.edit');
     Route::post('/admin/storecomment', [ComentarioController::class, 'store'])->name('admin.comment.store');
-
-
     Route::post('/admin/deletecomment/{comment}', [ComentarioController::class, 'destroy'])->name('admin.comment.destroy');
 });
 
