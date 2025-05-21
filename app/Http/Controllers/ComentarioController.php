@@ -17,7 +17,7 @@ class ComentarioController extends Controller
      */
     public function create(Request $request)
     {
-       /*  dd($request); */
+        /*  dd($request); */
         $data = request()->validate([
             'user_id' => 'required|exists:users,id',
             'mensaje_id' => 'required|exists:mensajes,id',
@@ -29,7 +29,7 @@ class ComentarioController extends Controller
             'mensaje_id' => $data['mensaje_id'],
             'content' => $data['content']
         ]);
-         return back()->with('commentCreated', true);
+        return back()->with('commentCreated', true);
     }
 
     /**
@@ -45,11 +45,12 @@ class ComentarioController extends Controller
         /* Mensaje::whereId($valiated->id)->update() */
         $savecomment = Comentario::findOrFail($validated['id']);
         $savecomment->content = $validated['content'];
+        $savecomment->updated_at = now();
         $savecomment->save();
 
         return back()->with('commentEdited', true);
     }
-/* 
+    /* 
      public function edit(Comentario $comentario)
     {
         //
@@ -71,14 +72,11 @@ class ComentarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-   
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comentario $comentario)
-    {
-        
-    }
+    public function update(Request $request, Comentario $comentario) {}
 
     /**
      * Remove the specified resource from storage.

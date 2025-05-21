@@ -28,19 +28,21 @@ Route::middleware('auth')->group(function () {
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/msgcreate', [MensajesEtiquetasController::class, 'create'])/* ->middleware(['auth', 'verified']) */->name('mensaje.create');
-    Route::post('/commentcreate', [ComentarioController::class, 'create'])/* ->middleware(['auth', 'verified']) */->name('comment.create');
-    Route::post('/deletemsg/{msg}', [MensajesEtiquetasController::class, 'destroy'])->name('msg.destroy');
-    Route::post('/deletecomment/{comment}', [ComentarioController::class, 'destroy'])->name('comment.destroy');
-});
-//ruta editar-eliminar con middleware admin
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::post('/admin/editmsg/{msg}', [MensajesEtiquetasController::class, 'edit'])->name('admin.msg.edit');
-    Route::post('/admin/storemsg', [MensajesEtiquetasController::class, 'store'])->name('admin.msg.store');
-    Route::post('/admin/deletemsg/{msg}', [MensajesEtiquetasController::class, 'destroy'])->name('admin.msg.destroy');
+    Route::delete('/deletemsg/{msg}', [MensajesEtiquetasController::class, 'destroy'])->name('msg.destroy');
 
-    Route::post('/admin/editcomment/{comment}', [ComentarioController::class, 'edit'])->name('admin.comment.edit');
+    Route::post('/commentcreate', [ComentarioController::class, 'create'])/* ->middleware(['auth', 'verified']) */->name('comment.create');
+    Route::delete('/deletecomment/{comment}', [ComentarioController::class, 'destroy'])->name('comment.destroy');
+});
+
+//rutas editar-eliminar con middleware admin
+Route::middleware(['auth','verified','admin'])->group(function () {
+    Route::get('/admin/editmsg/{msg}', [MensajesEtiquetasController::class, 'edit'])->name('admin.msg.edit');
+    Route::post('/admin/storemsg', [MensajesEtiquetasController::class, 'store'])->name('admin.msg.store');
+    Route::delete('/admin/deletemsg/{msg}', [MensajesEtiquetasController::class, 'destroy'])->name('admin.msg.destroy');
+
+    Route::get('/admin/editcomment/{comment}', [ComentarioController::class, 'edit'])->name('admin.comment.edit');
     Route::post('/admin/storecomment', [ComentarioController::class, 'store'])->name('admin.comment.store');
-    Route::post('/admin/deletecomment/{comment}', [ComentarioController::class, 'destroy'])->name('admin.comment.destroy');
+    Route::delete('/admin/deletecomment/{comment}', [ComentarioController::class, 'destroy'])->name('admin.comment.destroy');
 });
 
 require __DIR__ . '/auth.php';

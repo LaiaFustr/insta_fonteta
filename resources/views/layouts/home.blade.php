@@ -49,7 +49,7 @@
              <div class="p-4">
 
 
-                 <div class="alert bg-light">
+                 <div class="alert alert-info">
                      <span class="text-primary me-auto">{{ $mensaje->user->name }}</span>
                      <div class="row">
                          @if(session('editmsg') !=null && session('editmsg') == $mensaje->id)
@@ -57,7 +57,7 @@
                              @csrf
                              <input type="hidden" name="id" value="{{$mensaje->id}}">
                              <textarea class="form-control" name="content" id="">{{session('content')}}</textarea>
-                             <button type="submit">Aceptar cambios</button>
+                             <button class="mt-2 px-3 py-2 border rounded" style="border:1px solid #055160!important;" type="submit"><strong>Aceptar cambios</strong></button>
                          </form>
                          @else
                          <p class="col pb-0 h5"> {!! $mensaje->content !!} </p>
@@ -68,15 +68,16 @@
                          <div class="col-auto ms-auto">
                              <div class="row d-flex">
                                  <div class="col-auto px-1">
-                                     <form method="post" action="{{route('admin.msg.edit', $mensaje->id)}}">
+                                     <form method="get" action="{{route('admin.msg.edit', $mensaje->id)}}">
                                          @csrf
-                                         <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fa-solid fa-pencil"></i></button>
+                                         <button class="btn btn-sm btn-primary" type="submit"><i class="fa-solid fa-pencil"></i></button>
                                      </form>
                                  </div>
                                  <div class="col-auto  px-1">
                                      <form method="post" action="{{route('admin.msg.destroy', $mensaje->id)}}">
                                          @csrf
-                                         <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                                         @method('DELETE')
+                                         <button class="btn btn-sm btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
                                      </form>
                                  </div>
                              </div>
@@ -85,6 +86,7 @@
                          <div class="col-auto ms-auto  gap-3">
                              <form method="post" action="{{route('msg.destroy', $mensaje->id)}}">
                                  @csrf
+                                  @method('DELETE')
                                  <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
                              </form>
                          </div>
@@ -105,7 +107,7 @@
                              @csrf
                              <input type="hidden" name="id" value="{{$comentario->id}}">
                              <textarea class="form-control" name="content" id="">{{$comentario->content}}</textarea>
-                             <button type="submit">Aceptar cambios</button>
+                             <button class="mt-2 px-3 py-2 border border-secondary rounded"  type="submit">Aceptar cambios</button>
                          </form>
                          @else
                          <div class="col"> {{$comentario->content}}</div>
@@ -115,7 +117,7 @@
                          <div class="col-auto ms-auto">
                              <div class="row d-flex">
                                  <div class="col-auto px-1">
-                                     <form method="post" action="{{route('admin.comment.edit', $comentario->id)}}">
+                                     <form method="get" action="{{route('admin.comment.edit', $comentario->id)}}">
                                          @csrf
                                          <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-pencil"></i></button>
                                      </form>
@@ -124,6 +126,7 @@
                                  <div class="col-auto px-1">
                                      <form method="post" action="{{route('admin.comment.destroy', $comentario->id)}}">
                                          @csrf
+                                         @method('DELETE')
                                          <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-trash"></i></button>
                                      </form>
                                  </div>
@@ -136,6 +139,7 @@
                              </form> -->
                              <form method="post" action="{{route('comment.destroy', $comentario->id)}}">
                                  @csrf
+                                  @method('DELETE')
                                  <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-trash"></i></button>
                              </form>
                          </div>
@@ -170,7 +174,6 @@
              @endforeach
          </div>
          @else
-
          <div>No hay nada</div>
      </div>
      @endif

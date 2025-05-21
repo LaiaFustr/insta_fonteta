@@ -116,9 +116,12 @@ class MensajesEtiquetasController extends Controller
                     'nombre' => $etiqueta,
                 ]);
 
-                $savemsg->etiquetas()->attach($lasteti->id);
+                if (!$savemsg->etiquetas()->where('id', $lasteti->id)->count() > 0) {
+                    $savemsg->etiquetas()->attach($lasteti->id);
+                }
             }
         }
+        $savemsg->updated_at = now();
         $savemsg->save();
 
         return back()->with('msgEdited', true);
