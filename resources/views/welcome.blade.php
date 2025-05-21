@@ -174,4 +174,28 @@
         timer: 700
     });
 </script>
+@elseif (session('msgEdited'))
+
+<script>
+    str = "Mensaje editado con éxito!";
+
+    Swal.fire({
+        icon: "success",
+        title: str,
+        showConfirmButton: false,
+        timer: 700
+    });
+</script>
+@elseif (session('commentEdited'))
+
+<script>
+    str = "Comentario editado con éxito!";
+
+    Swal.fire({
+        icon: "success",
+        title: str,
+        showConfirmButton: false,
+        timer: 700
+    });
+</script>
 @endif

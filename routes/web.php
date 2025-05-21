@@ -39,14 +39,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //ruta editar-eliminar con middleware admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/editmsg/{msg}', [MensajesEtiquetasController::class, 'edit'])->name('admin.msg.edit');
-    /* Route::get('/editmsg', function(){
-         return redirect()->route('home');
-    })->name('editmsg'); */
-    Route::post('/admin/storemsg/{comment}', [MensajesEtiquetasController::class, 'store'])->name('admin.msg.store');
+    Route::post('/admin/storemsg', [MensajesEtiquetasController::class, 'store'])->name('admin.msg.store');
     Route::post('/admin/deletemsg/{msg}', [MensajesEtiquetasController::class, 'destroy'])->name('admin.msg.destroy');
 
-    Route::post('/admin/updatecomment/{comment}', [ComentarioController::class, 'update'])->name('admin.comment.update');
-    Route::post('/admin/storecomment/{comment}', [ComentarioController::class, 'store'])->name('admin.comment.store');
+
+
+
+
+     Route::post('/admin/editcomment/{comment}', [ComentarioController::class, 'edit'])->name('admin.comment.edit');
+
+    Route::post('/admin/storecomment', [ComentarioController::class, 'store'])->name('admin.comment.store');
+
+
     Route::post('/admin/deletecomment/{comment}', [ComentarioController::class, 'destroy'])->name('admin.comment.destroy');
 });
 

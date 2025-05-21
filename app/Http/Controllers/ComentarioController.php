@@ -37,9 +37,29 @@ class ComentarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'id' => 'required',
+            'content' => 'required'
+        ]);
 
+        /* Mensaje::whereId($valiated->id)->update() */
+        $savecomment = Comentario::findOrFail($validated['id']);
+        $savecomment->content = $validated['content'];
+        $savecomment->save();
+
+        return back()->with('commentEdited', true);
+    }
+/* 
+     public function edit(Comentario $comentario)
+    {
+        //
+    } */
+    public function edit($id)
+    {
+        $editcomment = Comentario::find($id);
+
+        return redirect()->route('home')->with('editcomment', $editcomment->id);
+    }
     /**
      * Display the specified resource.
      */
@@ -51,11 +71,7 @@ class ComentarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Comentario $comentario)
-    {
-        //
-    }
-
+   
     /**
      * Update the specified resource in storage.
      */

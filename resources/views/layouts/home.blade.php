@@ -27,33 +27,33 @@
                  <div class="alert alert-secondary">
                      <span class="text-primary small me-auto">{{ $mensaje->user->name }}</span>
                      <div class="row">
-                        <!-- @if(request()->routeIs('editmsg') && $mensaje->id == $id)
-                        <form method="post" action="">
-                            <textarea name="" id="">{!! $mensaje->content !!}</textarea>
-                            <button type="submit">Aceptar cambios</button>
-                        </form>
-                        @else -->
+                         @if(session('editmsg') !=null && session('editmsg') == $mensaje->id)
+                         <form method="post" action="{{route('admin.msg.store')}}">
+                             @csrf
+                             <input type="hidden" name="id" value="{{$mensaje->id}}">
+                             <textarea class="form-control" name="content" id="">{{session('content')}}</textarea>
+                             <button type="submit">Aceptar cambios</button>
+                         </form>
+                         @else
                          <p class="col pb-0"> {!! $mensaje->content !!} </p>
-                         <!-- @endif -->
+                         @endif
+
                          @auth
                          @if(Auth::user()->role == 'admin')<!-- tendrá acceso a las rutas de editado y borrado de admin  -->
                          <div class="col-auto ms-auto gap-3">
                              <form method="post" action="{{route('admin.msg.edit', $mensaje->id)}}">
-                                @csrf
+                                 @csrf
                                  <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fa-solid fa-pencil"></i></button>
                              </form>
                              <form method="post" action="{{route('admin.msg.destroy', $mensaje->id)}}">
-                                @csrf
+                                 @csrf
                                  <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
                              </form>
                          </div>
                          @elseif( $mensaje->user->name == Auth::user()->name)<!-- tendrá acceso a las rutas de editado y borrado de user  -->
                          <div class="col-auto ms-auto  gap-3">
-                             <!-- <form method="post" action="">
-                                 <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fa-solid fa-pencil"></i></button>
-                             </form> -->
                              <form method="post" action="{{route('msg.destroy', $mensaje->id)}}">
-                                @csrf
+                                 @csrf
                                  <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
                              </form>
                          </div>
@@ -69,16 +69,25 @@
                  <div class=" my-2 ms-5 p-2 px-5 border-bottom">
                      <span class="text-warning small bolder me-auto">{{ $comentario->user->name }}</span>
                      <div class="row">
+                        @if(session('editcomment') !=null && session('editcomment') == $comentario->id)
+                         <form method="post" action="{{route('admin.comment.store')}}">
+                             @csrf
+                             <input type="hidden" name="id" value="{{$comentario->id}}">
+                             <textarea class="form-control" name="content" id="">{{$comentario->content}}</textarea>
+                             <button type="submit">Aceptar cambios</button>
+                         </form>
+                         @else
                          <div class="col"> {{$comentario->content}}</div>
+                         @endif
                          @auth
                          @if(Auth::user()->role == 'admin' )
                          <div class="col-auto ms-auto">
-                             <form action="">
-                                @csrf
+                             <form  method="post" action="{{route('admin.comment.edit', $comentario->id)}}">
+                                 @csrf
                                  <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-pencil"></i></button>
                              </form>
                              <form method="post" action="{{route('admin.comment.destroy', $comentario->id)}}">
-                                @csrf
+                                 @csrf
                                  <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-trash"></i></button>
                              </form>
                          </div>
@@ -88,7 +97,7 @@
                                  <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-pencil"></i></button>
                              </form> -->
                              <form method="post" action="{{route('comment.destroy', $comentario->id)}}">
-                                @csrf
+                                 @csrf
                                  <button class="btn-sm small text-secondary mx-1" type="submit"><i class="fa-solid fa-trash"></i></button>
                              </form>
                          </div>

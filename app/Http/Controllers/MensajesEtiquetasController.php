@@ -76,17 +76,59 @@ class MensajesEtiquetasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
-
-    /* public function edit($id)
+    public function store(Request $request)
     {
-        $ide = $id;
-        return redirect()->route('editmsg', compact('ide'));
-    }
-    public function update(Request $request) {
 
+        $validated = $request->validate([
+            'id' => 'required',
+            'content' => 'required'
+        ]);
+
+        /* Mensaje::whereId($valiated->id)->update() */
+        $savemsg = Mensaje::findOrFail($validated['id']);
+        $savemsg->content = $validated['content'];
+
+        $etiquetas = $savemsg->etiquetas()->get();
+        foreach ($etiquetas as $etiqueta) {
+            $esta = false;
+            $msg = Etiqueta::find($etiqueta->id)->mensajes()->get();
+            if ($msg->count() > 1) {
+                $esta = true;
+            }
+
+            if (!$esta) {
+                Etiqueta::find($etiqueta->id)->delete();
+            }
+        }
+
+        $savemsg->etiquetas()->detach();
+        
+        $strEtiquetas =  $savemsg['content'];
+        if (str_contains($strEtiquetas, '#')) {
+            preg_match_all('/#(\w+)/', $strEtiquetas, $etiquetas);
+            foreach ($etiquetas[0] as $etiqueta) {
+                $lasteti = Etiqueta::firstOrCreate([
+                    'nombre' => $etiqueta,
+                ]);
+
+                $savemsg->etiquetas()->attach($lasteti->id);
+            }
+        }
+        $savemsg->save();
+
+        return back()->with('msgEdited', true);
+    }
+
+    public function edit($id)
+    {
+        $editmsg = Mensaje::find($id);
+
+        return redirect()->route('home')->with('editmsg', $editmsg->id)->with('content', $editmsg->content);
+    }
+    public function update(Request $request)
+    {
         return '';
-    } */
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -94,6 +136,20 @@ class MensajesEtiquetasController extends Controller
     public function destroy($id)
     {
         $mensaje = Mensaje::findOrFail($id);
+        $etiquetas = $mensaje->etiquetas()->get();
+
+        foreach ($etiquetas as $etiqueta) {
+            $esta = false;
+            $msg = Etiqueta::find($etiqueta->id)->mensajes()->get();
+            if ($msg->count() > 1) {
+                $esta = true;
+            }
+
+            if (!$esta) {
+                Etiqueta::find($etiqueta->id)->delete();
+            }
+        }
+
         $mensaje->etiquetas()->detach();
         $mensaje->comentarios()->delete();
         $mensaje->delete();
