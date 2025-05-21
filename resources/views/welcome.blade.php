@@ -26,7 +26,7 @@
             <div class="row d-flex justify-content-center align-items-center me-auto w-100">
                 <div class="col-auto">
                     <a class="bg-warning" href="{{ url('/home') }}">
-                        <img src="{{ asset('axolotl.svg') }}" alt="logo insta_lafonteta" width="70">
+                        <img src="{{ asset('axolotl.svg') }}" alt="logo insta_lafonteta" width="140">
                     </a>
                 </div>
                 <div class="col px-0 mx-0"> <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
