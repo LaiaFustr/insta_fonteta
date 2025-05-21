@@ -19,7 +19,7 @@ class MensajesEtiquetasController extends Controller
 
 
         $mensajes = /*  Mensaje:: */ Etiqueta::find($id)->mensajes()->with('comentarios', 'comentarios.user', 'user', 'etiquetas')->orderBy('id', 'desc')->get();
-
+        $mensajes->listaetiquetas = Etiqueta::all();
         foreach ($mensajes as $mensaje) {
             $str = $mensaje->content;
             foreach ($mensaje->etiquetas as $etiqueta) {
@@ -29,6 +29,9 @@ class MensajesEtiquetasController extends Controller
         }
 
         return view('welcome', compact('mensajes'));
+
+
+
         /* $mensajes = Mensaje::all();
         $mensajes_etiquetas = [];
         foreach ($mensajes as $mensaje) {
@@ -67,7 +70,9 @@ class MensajesEtiquetasController extends Controller
                 $lasteti = Etiqueta::firstOrCreate([
                     'nombre' => $etiqueta,
                 ]);
-                $lastmsg->etiquetas()->attach($lasteti->id);
+                if (!$lastmsg->etiquetas()->pluck('id')->contains($lasteti->id)) {
+                    $lastmsg->etiquetas()->attach($lasteti->id);
+                }
             }
         }
         return back()->with('msgCreated', true);
@@ -102,7 +107,7 @@ class MensajesEtiquetasController extends Controller
         }
 
         $savemsg->etiquetas()->detach();
-        
+
         $strEtiquetas =  $savemsg['content'];
         if (str_contains($strEtiquetas, '#')) {
             preg_match_all('/#(\w+)/', $strEtiquetas, $etiquetas);

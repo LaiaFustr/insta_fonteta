@@ -19,7 +19,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 </head>
-
 <body class="bg-[#FDFDFC] text-[#1b1b18] flex p-6 items-center  min-h-screen flex-col">
     <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
         <nav class="flex items-center">
@@ -29,14 +28,15 @@
                         <img src="{{ asset('axolotl.svg') }}" alt="logo insta_lafonteta" width="140">
                     </a>
                 </div>
-                <div class="col px-0 mx-0"> <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                <div class="col px-0 mx-0"> 
+                    <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         <i class="fa-solid fa-home"></i> {{ __('Home') }}
-                    </x-responsive-nav-link></div>
-                <div class="col px-0 mx-0"><x-responsive-nav-link :href="route('nube')" :active="request()->routeIs('nube')">
-                        <i class="fa-solid fa-cloud"></i> {{ __('Nube') }}
-                    </x-responsive-nav-link></div>
-
-
+                    </x-responsive-nav-link>
+                </div>
+                <div class="col px-0 mx-0">
+                    <!-- <x-responsive-nav-link href="route('nube')" active="request()->routeIs('nube')">
+                        <i class="fa-solid fa-cloud"></i>  __('Nube') 
+                    </x-responsive-nav-link>--></div> 
             </div>
             @if (Route::has('login'))
             <!-- <div class=""> -->
@@ -99,11 +99,11 @@
         </nav>
 
     </header>
-    @if(request()->routeIs('nube'))
-    @include('layouts.nube')
-    @else
+    <!-- if(request()->routeIs('nube'))
+    include('layouts.nube')
+    else-->
     @include('layouts.home')
-    @endif
+   
     </div>
 
     @if (Route::has('login'))

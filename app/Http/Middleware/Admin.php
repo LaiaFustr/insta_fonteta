@@ -18,7 +18,7 @@ class Admin
     {
         
         if(Auth::user()->role != 'admin'){
-            return redirect()->route('welcome')->with('manipulator', true);
+            return redirect()->route('home')->with('manipulator', true);
         }
 
 

@@ -15,6 +15,31 @@
  @endauth
 
  @if(isset($mensajes))
+
+ <div class="row py-5" style="position: absolute; left:20px; width: 310px;">
+     <div class="col-7">
+         <div class="row">
+             
+             @if($mensajes->listaetiquetas !=null)
+             @foreach($mensajes->listaetiquetas as $etiqueta)
+             <a class="col-auto p-0 m-0" href="{{route('etiqueta.show',$etiqueta->id)}}">
+                 <h5 class="h5" style="color: <?php
+                                                echo sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                                                ?>;">{{$etiqueta->nombre}}</h5>
+             </a>
+             @endforeach
+
+
+
+             @else
+             <div class="d-flex justify-content-center align-items-center w-full  lg:grow ">No existen etiquetas</div>
+             @endif
+
+          
+         </div>
+     </div>
+ </div>
+
  <div class="flex justify-center transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
      <div class="row">
          <?php /* dd($mensajes) */ ?>

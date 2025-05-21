@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 
 use App\Models\Mensaje;
+use App\Models\Etiqueta;
 use Illuminate\Http\Request;
 
 class MensajeController extends Controller
@@ -15,7 +16,7 @@ class MensajeController extends Controller
     public function index()
     {
         $mensajes =  Mensaje::with('comentarios', 'comentarios.user', 'user', 'etiquetas')->orderBy('id', 'desc')->get();
-
+$mensajes->listaetiquetas = Etiqueta::all();
         foreach ($mensajes as $mensaje) {
             $str = $mensaje->content;
             foreach ($mensaje->etiquetas as $etiqueta) {

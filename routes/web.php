@@ -9,15 +9,11 @@ use App\Models\Mensaje;
 use Database\Seeders\MensajesEtiquetasSeeder;
 use Illuminate\Support\Facades\Route;
 
-/* Route::get('/', function () {
-    return view('welcome');
-}); */
-
 Route::get('/', function () {
     return redirect()->route('home');
 })->name('welcome');
 Route::get('/home',/* */ [MensajeController::class, 'index'])->name('home');
-Route::get('/nube', [EtiquetaController::class, 'index'])->name('nube');
+/* Route::get('/nube', [EtiquetaController::class, 'index'])->name('nube'); */
 Route::get('/etiqueta/{nombre}', [MensajesEtiquetasController::class, 'index'])->name('etiqueta.show');
 
 /* Route::post('/msgcreate', [MensajesEtiquetasController::class, 'create'])->middleware(['auth', 'verified'])->name('mensaje.create'); */
