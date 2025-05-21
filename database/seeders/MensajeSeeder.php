@@ -14,33 +14,39 @@ class MensajeSeeder extends Seeder
     public function run(): void
     {
         DB::table('mensajes')->insert([
-            [
+            [//1
                 'user_id' => 1,
-                'content' => 'Hola, este es el primer mensaje del usuario 1. #juliorules',
+                'content' => 'Buenas a #todos, mi nombre es #test',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
+            [//2
                 'user_id' => 2,
-                'content' => 'Este es el segundo mensaje, del usuario 2. #adios',
+                'content' => '#admin os dice a #todos #adios',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
+            [//3
                 'user_id' => 1,
-                'content' => 'Otro mensaje del usuario 1, probando. #hola',
+                'content' => 'Pues yo vuelvo a decir #hola y #buenlunes. #yes #positive #bien #jeje #happy',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
+            [//4
                 'user_id' => 2,
-                'content' => 'Mensaje adicional desde el usuario 2. #test',
+                'content' => '#buenlunes. Es cierto que hay que estar #happy pero #llorar también va #bien a veces.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
+            [//5
                 'user_id' => 1,
-                'content' => 'Último mensaje de prueba para el usuario 1. #test',
+                'content' => 'Los que dicen que es martes tienen #razon. Ya es #martes y el cuerpo lo sabe!',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [//6
+                'user_id' => 2,
+                'content' => 'Hoy es #martes y #test lo sabeee, quiero todos los detalles!! #buenmartes',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
