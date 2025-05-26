@@ -1,3 +1,4 @@
+
  @auth
  <div class="flex items-center justify-center w-full">
      <div class="row">
@@ -16,8 +17,8 @@
 
  @if(isset($mensajes))
 
- <div class="row py-5" style="position: absolute; left:20px; width: 310px;">
-     <div class="col-7">
+ <div class="row py-5" style="position: fixed; left:50px; top:30vh; width: 310px;">
+     <div class="col-10">
          <div class="row">
              
              @if($mensajes->listaetiquetas !=null)
