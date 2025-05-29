@@ -21,11 +21,11 @@ class MensajesEtiquetasController extends Controller
         $mensajes = /*  Mensaje:: */ Etiqueta::find($id)->mensajes()->with('comentarios', 'comentarios.user', 'user', 'etiquetas')->orderBy('id', 'desc')->get();
         $mensajes->listaetiquetas = Etiqueta::all();
         foreach ($mensajes as $mensaje) {
-            $str = $mensaje->content;
-            foreach ($mensaje->etiquetas as $etiqueta) {
+            /* $str = $mensaje->content; */
+            /* foreach ($mensaje->etiquetas as $etiqueta) {
                 $hashtag = '<a class="text-muted p-0 m-0 mb-1" href="' . route('etiqueta.show', $etiqueta->id) . '">' . $etiqueta->nombre . '</a>';
                 $mensaje->content = str_replace($etiqueta->nombre, $hashtag, $mensaje->content);
-            }
+            } */
         }
 
         return view('welcome', compact('mensajes'));
